@@ -13,4 +13,11 @@ Repo with assets to reproduce the talk
 ## Install serverless
 1. Install the operator by following the official [doc](https://docs.openshift.com/serverless/1.31/install/install-serverless-operator.html)
    * `oc create -f yamls/serverless-operator.yaml`
-2. oc create -f yamls/serving.yaml
+  
+2. Create Serving
+  * `oc project openshift-serverless`
+  * `oc create -f yamls/serving.yaml`
+  * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
+
+3. Functions
+   * Exploring https://docs.openshift.com/serverless/1.31/functions/serverless-functions-getting-started.html
