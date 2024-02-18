@@ -23,5 +23,16 @@ Repo with assets to reproduce the talk
    * Exploring [docs](https://docs.openshift.com/serverless/1.31/functions/serverless-functions-getting-started.html)
    * function created with `kn func create -l go -t http fn`
    * `kn func build --builder=pack --image ghcr.io/jgomezselles/kubecon24-kepler-knative/fn1:0.0.1`
+   * Having issue: https://github.com/knative/func/issues/2154
 
-* Having issue: https://github.com/knative/func/issues/2154 
+4. Service
+   * `kn service create mock --image ttl.sh/jgomezselles/server-mock:0.0.1 --force`
+   * Need to attack mock-hermes.apps-crc.testing:80
+
+## Doubts
+* Internal endpoint?
+* Scale rules
+
+## Next
+* Upload mock image
+* Helm chart for hermes -> https://github.com/helm/chart-releaser-action
