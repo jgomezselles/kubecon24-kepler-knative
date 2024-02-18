@@ -20,4 +20,8 @@ Repo with assets to reproduce the talk
   * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
 
 3. Functions
-   * Exploring https://docs.openshift.com/serverless/1.31/functions/serverless-functions-getting-started.html
+   * Exploring [docs](https://docs.openshift.com/serverless/1.31/functions/serverless-functions-getting-started.html)
+   * function created with `kn func create -l go -t http fn`
+   * `kn func build --builder=pack --image ghcr.io/jgomezselles/kubecon24-kepler-knative/fn1:0.0.1`
+
+* Having issue: https://github.com/knative/func/issues/2154 
