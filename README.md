@@ -19,20 +19,20 @@ Repo with assets to reproduce the talk
   * `oc create -f yamls/serving.yaml`
   * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
 
-3. Functions
-   * Exploring [docs](https://docs.openshift.com/serverless/1.31/functions/serverless-functions-getting-started.html)
-   * function created with `kn func create -l go -t http fn`
-   * `kn func build --builder=pack --image ghcr.io/jgomezselles/kubecon24-kepler-knative/fn1:0.0.1`
-   * Having issue: https://github.com/knative/func/issues/2154
-
-4. Service
-   * `kn service create mock --image ttl.sh/jgomezselles/server-mock:0.0.1 --force`
+3. Service
+   * `kn service create mock --image ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --concurrency-limit 4 --force`
    * Need to attack mock-hermes.apps-crc.testing:80
+
+## Building mock image
+   * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
+
+## Deleting installation
+* `kn service delete mock`
+* `oc delete -f yamls/serving.yaml`
+* `oc delete -f yamls/serverless-operator.yaml`
 
 ## Doubts
 * Internal endpoint?
-* Scale rules
 
 ## Next
-* Upload mock image
 * Helm chart for hermes -> https://github.com/helm/chart-releaser-action
