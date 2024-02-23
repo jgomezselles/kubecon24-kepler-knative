@@ -20,11 +20,16 @@ Repo with assets to reproduce the talk
   * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
 
 3. Service
-   * `kn service create mock --image ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --concurrency-limit 4 --force`
+   * `oc create project mock-ns`
+   * `kn service create mock --namespace mock-ns --image ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --concurrency-limit 4 --force`
    * Need to attack mock-hermes.apps-crc.testing:80
 
 4. Create user-workload-monitoring (Prometheus)
    * `oc create -f yamls/cluster-monitoring-config.yaml`
+
+5. Install hermes
+   * `helm install hermes -n mock-ns charts/hermes-job/`
+
 
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
