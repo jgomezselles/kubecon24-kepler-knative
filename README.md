@@ -23,6 +23,9 @@ Repo with assets to reproduce the talk
    * `kn service create mock --image ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --concurrency-limit 4 --force`
    * Need to attack mock-hermes.apps-crc.testing:80
 
+4. Create user-workload-monitoring (Prometheus)
+   * `oc create -f yamls/cluster-monitoring-config.yaml`
+
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
 
