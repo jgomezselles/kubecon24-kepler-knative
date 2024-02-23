@@ -30,6 +30,8 @@ Repo with assets to reproduce the talk
 5. Install hermes
    * `helm install hermes -n mock-ns charts/hermes-job/`
 
+6. Install OTel
+   * `oc create -f otel-collector/`
 
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
