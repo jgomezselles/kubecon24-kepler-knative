@@ -15,9 +15,9 @@ Repo with assets to reproduce the talk
    * `oc create -f yamls/serverless-operator.yaml`
   
 2. Create Serving
-  * `oc project openshift-serverless`
-  * `oc create -f yamls/serving.yaml`
-  * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
+   * `oc project openshift-serverless`
+   * `oc create -f yamls/serving.yaml`
+   * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
 
 3. Service
    * `oc create project mock-ns`
@@ -54,6 +54,7 @@ Repo with assets to reproduce the talk
 ## Next
 * Change to K8s job
 * Deploy mock as server
+* Find the best way to deploy the mock with a LoadBalancer in http/2
 
 ## Fix
 * Fix service monitor in the otel collector
