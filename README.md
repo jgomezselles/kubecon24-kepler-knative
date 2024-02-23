@@ -27,11 +27,18 @@ Repo with assets to reproduce the talk
 4. Create user-workload-monitoring (Prometheus)
    * `oc create -f yamls/cluster-monitoring-config.yaml`
 
-5. Install hermes
+5. Install power monitoring
+   * Follow [instructions](https://docs.openshift.com/container-platform/4.14/observability/power_monitoring/installing-power-monitoring.html)
+
+6. Deploy grafana
+   * Simply run [deploy-grafana.sh](https://github.com/sustainable-computing-io/kepler-operator/blob/v1alpha1/hack/dashboard/openshift/deploy-grafana.sh)
+
+7. Install hermes
    * `helm install hermes -n mock-ns charts/hermes-job/`
 
-6. Install OTel
+8. Install OTel
    * `oc create -f otel-collector/`
+   * Check by `oc get csv -n openshift-opentelemetry-operator`
 
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
@@ -45,4 +52,9 @@ Repo with assets to reproduce the talk
 * Internal endpoint?
 
 ## Next
-* Helm chart for hermes -> https://github.com/helm/chart-releaser-action
+* Change to K8s job
+* Deploy mock as server
+
+## Fix
+* Fix service monitor in the otel collector
+* Add endpoint to hermes to export OTLP metrics
