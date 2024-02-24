@@ -20,5 +20,5 @@ script:
   cm: traffic-script-cm
 
 o11y:
-  metrics_endpoint:
+  metrics_endpoint: otel-collector.mock-ns.svc.cluster.local:4318/v1/metrics
   traces_endpoint:
