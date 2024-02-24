@@ -59,9 +59,14 @@ Repo with assets to reproduce the talk
 * Internal endpoint?
 
 ## Next
-* Change to K8s job
+* Update helm and installations with https://jgomezselles.github.io/hermes-charts/
 * Deploy mock as server
+* Add OTel collector to helm charts?
+* Update namespaces in svc monitor and collector
 * Find the best way to deploy the mock with a LoadBalancer in http/2
+* Install both at the same time and run
+* Create dashboard
+* See if we can save prometheus metrics to just reuse them
 
 ## Fix
 * Fix service monitor in the otel collector
