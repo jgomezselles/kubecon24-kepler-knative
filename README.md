@@ -40,6 +40,13 @@ Repo with assets to reproduce the talk
    * `oc create -f otel-collector/`
    * Check by `oc get csv -n openshift-opentelemetry-operator`
 
+9. Create service monitor
+   * `oc create -f otel-service-monitor.yaml`
+
+## Queries:
+   * `avg(rate(hermes_requests_sent_total{id="post1"}[1m]))`
+   * `kepler:kepler:container_joules_total:consumed:24h:by_ns{container_namespace=~"$namespace"} * $watt_per_second_to_kWh`
+
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
 
