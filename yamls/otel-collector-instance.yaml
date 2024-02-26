@@ -6,7 +6,8 @@ metadata:
 spec:
   mode: deployment
   observability:
-    enableMetrics: true
+    metrics:
+      enableMetrics: true
   config: |
     receivers:
       otlp:
