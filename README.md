@@ -10,38 +10,31 @@ Repo with assets to reproduce the talk
    *  `tar -xf my-kn.tar.gz`
    *  `sudo mv kn-linux-amd64 /usr/local/bin/kn`
 
-## Install serverless
-1. Install the operator by following the official [doc](https://docs.openshift.com/serverless/1.31/install/install-serverless-operator.html)
-   * `oc create -f yamls/serverless-operator.yaml`
-  
-2. Create Serving
-   * `oc project openshift-serverless`
-   * `oc create -f yamls/serving.yaml`
-   * Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
+## Installing the demo
+1. Install serverless, power monitoring and opentelemetry operators by  `kubectl apply -f yamls/operators.yaml`
 
-3. Service
-   * `oc create project mock-ns`
-   * `kn service create mock --namespace mock-ns --image ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --concurrency-limit 4 --force`
+> Serverless official [doc](https://docs.openshift.com/serverless/1.31/install/install-serverless-operator.html)
+> Power monitoring docs [instructions](https://docs.openshift.com/container-platform/4.14/observability/power_monitoring/installing-power-monitoring.html)
+  
+2. Install user workload monitoring (prometheus), serving and kepler instances by:
+   * `kubectl apply -f yamls/instances.yaml`
+
+> Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
+
+3. Create the KN Service on its own namespace
+   * `kubectl create ns serverless-ns`
+   * `kn service create mock --namespace serverless-ns --image ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --concurrency-limit 4 --force`
    * Need to attack mock-hermes.apps-crc.testing:80
 
-4. Create user-workload-monitoring (Prometheus)
-   * `oc create -f yamls/cluster-monitoring-config.yaml`
-
-5. Install power monitoring
-   * Follow [instructions](https://docs.openshift.com/container-platform/4.14/observability/power_monitoring/installing-power-monitoring.html)
-
-6. Deploy grafana
+5. Deploy grafana
    * Simply run [deploy-grafana.sh](https://github.com/sustainable-computing-io/kepler-operator/blob/v1alpha1/hack/dashboard/openshift/deploy-grafana.sh)
 
-7. Install hermes
-   * `helm install hermes -n mock-ns charts/hermes-job/`
+6. Install hermes
+   * `helm repo add hermes-charts https://jgomezselles.github.io/hermes-charts`
+   * `helm install kn-hermes -n serverless-ns charts/kn-hermes/`
 
-8. Install OTel
-   * `oc create -f otel-collector/`
-   * Check by `oc get csv -n openshift-opentelemetry-operator`
 
-9. Create service monitor
-   * `oc create -f otel-service-monitor.yaml`
+# Other useful info
 
 ## Queries:
    * `avg(rate(hermes_requests_sent_total{id="post1"}[1m]))`
@@ -67,6 +60,9 @@ Repo with assets to reproduce the talk
 * Install both at the same time and run
 * Create dashboard
 * See if we can save prometheus metrics to just reuse them
+* Change commands to be kubectl
+* Change Kepler to community version
+* Record the demo
 
 ## Fix
 * Fix service monitor in the otel collector

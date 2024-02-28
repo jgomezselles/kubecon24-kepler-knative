@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |
+    enableUserWorkload: true
+---
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
+metadata:
+    name: knative-serving
+    namespace: knative-serving
+    annotations:
+      serverless.openshift.io/default-enable-http2: 'true'
+
+---
+apiVersion: kepler.system.sustainable.computing.io/v1alpha1
+kind: Kepler
+metadata:
+  name: kepler
+  labels:
+    app.kubernetes.io/instance: kepler
+    app.kubernetes.io/name: kepler
+    app.kubernetes.io/part-of: kepler-operator
+spec:
+  exporter:
+    deployment:
+      port: 9103
+      tolerations:
+        - operator: Exists

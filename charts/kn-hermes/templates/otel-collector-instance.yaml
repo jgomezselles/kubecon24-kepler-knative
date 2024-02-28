@@ -2,7 +2,7 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: otel
-  namespace: mock-ns
+  ##namespace: mock-ns
 spec:
   mode: deployment
   observability:

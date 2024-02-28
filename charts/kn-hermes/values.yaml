@@ -8,8 +8,17 @@ global:
   istio:
     sidecar:
       inject: false
+
 hermes:
-  name: hermes
+  name: kn-hermes
+
+hermesjob:
+  endpoint: "mock-serverless-ns.apps.powermon-jq-bm.qe.devcluster.openshift.com"
+  o11y:
+    metrics_endpoint: otel-collector:4318/v1/metrics
+
+# TODO: Add anchor variables
+endpoint: "mock-serverless-ns.apps.powermon-jq-bm.qe.devcluster.openshift.com"
 
 image:
   repository: ghcr.io/jgomezselles/hermes
@@ -20,5 +29,5 @@ script:
   cm: traffic-script-cm
 
 o11y:
-  metrics_endpoint: otel-collector.mock-ns.svc.cluster.local:4318/v1/metrics
+  metrics_endpoint: otel-collector:4318/v1/metrics
   traces_endpoint:
