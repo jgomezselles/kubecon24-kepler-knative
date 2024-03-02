@@ -65,5 +65,9 @@ Repo with assets to reproduce the talk
 * Record the demo
 
 ## Fix
+* Trying https://knative.dev/docs/serving/autoscaling/autoscale-go/ 
+* Also https://knative.dev/docs/serving/load-balancing/target-burst-capacity/ 
+  * with this you can enforce that Activator is always in path (if you set the value to “-1”). This way it should work that it select different backends even with only one connection.
+  * again in the oc get sks you can see if the Activator is in path (mode: Proxy) or not (mode: Serve)
 * Fix service monitor in the otel collector
 * Add endpoint to hermes to export OTLP metrics
