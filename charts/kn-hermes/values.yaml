@@ -4,30 +4,39 @@
 
 replicaCount: 1
 
+## Global variables
 global:
   istio:
     sidecar:
       inject: false
+  hermes:
+    endpoint: "mock-serverless-ns.apps.powermon-jq-bm.qe.devcluster.openshift.com"
+    port: "80"
+    timeout: 6000
+    metrics_endpoint: "otel-collector:4318/v1/metrics"
+    repo: ghcr.io/jgomezselles/kubecon24/loadgen
+    tag: 0.0.2
+    cm: traffic-script-cm
+    rate: 100
+    print: 1
+    time: 100
+
+## Conditions for Chart dependencies
+hermesjob:
+  serverless:
+    enabled: true
+  server:
+    enabled: true
+
+## Customizations for each dependency
+hermesjob-server:
+  schedule: "10 * * * *"
+
+hermesjob-serverless:
+  schedule: "10 * * * *"
+
+image:
+  pullPolicy: Always
 
 hermes:
   name: kn-hermes
-
-hermesjob:
-  endpoint: "mock-serverless-ns.apps.powermon-jq-bm.qe.devcluster.openshift.com"
-  o11y:
-    metrics_endpoint: otel-collector:4318/v1/metrics
-
-# TODO: Add anchor variables
-endpoint: "mock-serverless-ns.apps.powermon-jq-bm.qe.devcluster.openshift.com"
-
-image:
-  repository: ghcr.io/jgomezselles/hermes
-  tag: 0.0.4
-  pullPolicy: IfNotPresent
-
-script:
-  cm: traffic-script-cm
-
-o11y:
-  metrics_endpoint: otel-collector:4318/v1/metrics
-  traces_endpoint:

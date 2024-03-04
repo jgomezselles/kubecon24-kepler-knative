@@ -24,22 +24,22 @@ spec:
 
     spec:
       volumes:
-        - name: {{ .Values.script.cm }}-volume
+        - name: {{ .Values.global.hermes.cm }}-volume 
           configMap:
-             name: {{ .Values.script.cm }}
+             name: {{ .Values.global.hermes.cm }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.global.hermes.repo }}:{{ .Values.global.hermes.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sh", "-cx"]
           args:
             - sleep 365d;
           volumeMounts:
-            - name: {{ .Values.script.cm }}-volume
+            - name: {{ .Values.global.hermes.cm }}-volume
               mountPath: "/etc/scripts/"
               readOnly: true
           env:          
             - name: "OTLP_METRICS_ENDPOINT"
-              value: {{ .Values.o11y.metrics_endpoint }}
+              value: {{ .Values.global.metrics_endpoint }}
             - name: "OTLP_TRACES_ENDPOINT"
-              value: {{ .Values.o11y.traces_endpoint }}
+              value: {{ .Values.global.traces_endpoint }}
