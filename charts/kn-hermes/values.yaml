@@ -38,7 +38,7 @@ mock:
   podAnnotations:
     sidecar.istio.io/inject: "true"
   service:
-    port: 80
+    port: 8080
     trype: ClusterIP
 
 ## Conditions for Chart dependencies
