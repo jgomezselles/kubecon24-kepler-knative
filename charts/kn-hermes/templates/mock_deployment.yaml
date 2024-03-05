@@ -1,0 +1,30 @@
+{{- if .Values.hermesjob.server.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mock.name }}
+  labels:
+    {{- include "hermes.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.mock.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hermes.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: {{ .Values.global.istio.sidecar.inject | default false | quote }}
+      labels:
+        {{- include "hermes.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: server-mock
+          image: "{{ .Values.mock.image }}"
+          imagePullPolicy: {{ .Values.mock.pullPolicy }}
+          ports:
+            - name: http2-rest
+              containerPort: {{ .Values.mock.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.mock.resources | nindent 12 }}
+{{- end }}

@@ -18,11 +18,11 @@ data:
         }
       },
       "flow": [
-        "post1",
-        "post1"
+        "{{ .Release.Name }}-post",
+        "{{ .Release.Name }}-post"
       ],
       "messages": {
-        "post1": {
+        "{{ .Release.Name }}-post": {
           "method": "POST",
           "url": "url/example/path/id-<range_1>",
           "body": {

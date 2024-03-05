@@ -1,0 +1,17 @@
+{{- if .Values.hermesjob.server.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mock.name }}
+  labels:
+    {{- include "hermes.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.mock.service.type }}
+  ports:
+    - port: {{ .Values.mock.service.port }}
+      targetPort: {{ .Values.mock.service.port }}
+      protocol: TCP
+      name: http2-rest
+  selector:
+    {{- include "hermes.selectorLabels" . | nindent 4 }}
+{{- end }}

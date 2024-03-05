@@ -1,0 +1,17 @@
+{{- if .Values.hermesjob.serverless.enabled -}}
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: serverless-mock
+  labels:
+    networking.knative.dev/visibility: cluster-local
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/window: "10s"
+    spec:
+      containerConcurrency: 4
+      containers:
+      - image: {{ .Values.mock.image }}
+{{- end }}
