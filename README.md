@@ -54,8 +54,7 @@ crc config view
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
 * `helm delete -n serverless-ns serverless`
-* `helm delete istiod -n istio-system`
-* `helm delete istio-base -n istio-system`
+* `istioctl uninstall --purge`
 * `kubectl delete ns istio-system serverfull-ns serverless-ns`
 * Delete grafana
 * `oc delete -f yamls/serving.yaml`
