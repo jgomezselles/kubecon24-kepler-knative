@@ -1,0 +1,52 @@
+# Default values for serverfull deployment.
+
+## Conditions for Chart dependencies
+hermesjob:
+  serverless:
+    enabled: false
+  server:
+    enabled: true
+
+## Global variables
+global:
+  istio:
+    sidecar:
+      inject: false
+  hermes:
+    endpoint: "server-mock"
+    port: "8080"
+    timeout: 6000
+    metrics_endpoint: "otel-collector:4318/v1/metrics"
+    repo: ghcr.io/jgomezselles/kubecon24/loadgen
+    tag: 0.0.2
+    cm: traffic-script-cm
+    rate: 100
+    print: 1
+    time: 10
+
+## Values for this helm chart
+replicaCount: 1
+image:
+## In case we want to overwrite images and force the cluster to download them
+  pullPolicy: IfNotPresent
+hermes:
+  name: kn-hermes
+
+mock:
+  name: server-mock
+  image: ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1
+  pullPolicy: IfNotPresent
+  replicaCount: 5
+  resources: {}
+  podAnnotations:
+    sidecar.istio.io/inject: "true"
+  service:
+    port: 8080
+    trype: ClusterIP
+
+## Customizations for each dependency
+hermesjob-server:
+  schedule: "10 * * * *"
+
+hermesjob-serverless:
+  schedule: "10 * * * *"
