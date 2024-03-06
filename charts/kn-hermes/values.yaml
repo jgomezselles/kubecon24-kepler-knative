@@ -17,9 +17,9 @@ global:
     repo: ghcr.io/jgomezselles/kubecon24/loadgen
     tag: 0.0.2
     cm: traffic-script-cm
-    rate: 100
+    rate: 4000
     print: 1
-    time: 10
+    time: 1200
 
 ## Values for this helm chart
 image:
@@ -50,7 +50,7 @@ hermesjob:
 
 ## Customizations for each dependency
 hermesjob-server:
-  schedule: "10 * * * *"
+  schedule: "1 * * * *"
 
 hermesjob-serverless:
-  schedule: "10 * * * *"
+  schedule: "31 * * * *"
