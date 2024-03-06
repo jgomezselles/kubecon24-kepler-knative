@@ -40,7 +40,7 @@ crc config view
 6. Create namespaces and enable auto-injection
      * `kubectl create ns serverless-ns`
      * `kubectl create ns serverfull-ns`
-     * `kubectl label namespace serverfull-ns serverless-ns istio-injection=enabled --overwrite`
+     * `kubectl label namespace serverfull-ns istio-injection=enabled --overwrite`
      * `kubectl get namespace -L istio-injection`
 
 7. Install hermes
