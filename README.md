@@ -35,7 +35,11 @@ crc config view
 4. Install hermes
    * `helm repo add hermes-charts https://jgomezselles.github.io/hermes-charts`
    * `helm repo update charts/kn-hermes`
-   * `helm install kn-hermes -n serverless-ns charts/kn-hermes/`
+   * Make sure to check/delete previous runs/namespaces: `kubectl get ns serverfull-ns serverless-ns`
+   * Install serverfull instance on its own namespace:
+     * `helm install serverfull -n  serverfull-ns kn-hermes/ -f kn-hermes/serverfull_values.yaml --create-namespace`
+   * Install serverless instance on its own namespace:
+     * `helm install serverless -n  serverless-ns kn-hermes/ -f kn-hermes/serverless_values.yaml --create-namespace --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
 
 
 # Other useful info
@@ -55,10 +59,7 @@ crc config view
 * `oc delete -f yamls/serverless-operator.yaml`
 
 ## Next
-* Update helm and installations with https://jgomezselles.github.io/hermes-charts/
-* Deploy mock as server
 * Find the best way to deploy the mock with a LoadBalancer in http/2
-* Install both at the same time and run
 * Create dashboard
 * See if we can save prometheus metrics to just reuse them
 * Change commands to be kubectl
