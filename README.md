@@ -34,7 +34,8 @@ crc config view
 
 4. Install istio with istioctl:
    * `curl -L https://istio.io/downloadIstio | sh -`
-   * `istioctl install --set profile=openshift`
+   * `kubectl create ns istio-system`
+   * `istioctl install --set profile=openshift --set values.global.proxy.holdApplicationUntilProxyStarts=true`
 
 6. Create namespaces and enable auto-injection
      * `kubectl create ns serverless-ns`

@@ -6,13 +6,13 @@ version: 0.0.1
 
 dependencies:
   - name: hermes-job
-    version: 0.0.2
+    version: 0.0.3
     repository: https://jgomezselles.github.io/hermes-charts
     alias: hermesjob-serverless
     condition: hermesjob.serverless.enabled
 
   - name: hermes-job
-    version: 0.0.2
+    version: 0.0.3
     repository: https://jgomezselles.github.io/hermes-charts
     alias: hermesjob-server
     condition: hermesjob.server.enabled
