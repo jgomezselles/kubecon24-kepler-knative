@@ -37,9 +37,9 @@ crc config view
    * `helm repo update charts/kn-hermes`
    * Make sure to check/delete previous runs/namespaces: `kubectl get ns serverfull-ns serverless-ns`
    * Install serverfull instance on its own namespace:
-     * `helm install serverfull -n  serverfull-ns kn-hermes/ -f kn-hermes/serverfull_values.yaml --create-namespace`
+     * `helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml --create-namespace`
    * Install serverless instance on its own namespace:
-     * `helm install serverless -n  serverless-ns kn-hermes/ -f kn-hermes/serverless_values.yaml --create-namespace --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
+     * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml --create-namespace --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
 
 
 # Other useful info
