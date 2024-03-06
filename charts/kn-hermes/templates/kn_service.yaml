@@ -10,6 +10,8 @@ spec:
     metadata:
       annotations:
         autoscaling.knative.dev/window: "10s"
+        autoscaling.knative.dev/target-burst-capacity: "-1"
+        autoscaling.knative.dev/max-scale: "6"
     spec:
       containerConcurrency: 4
       containers:
