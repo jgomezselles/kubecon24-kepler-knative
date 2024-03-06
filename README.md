@@ -32,19 +32,31 @@ crc config view
 3. Deploy grafana
    * Simply run [deploy-grafana.sh](https://github.com/sustainable-computing-io/kepler-operator/blob/v1alpha1/hack/dashboard/openshift/deploy-grafana.sh)
 
-4. Install hermes
+4. Install istio with istioctl:
+   * `curl -L https://istio.io/downloadIstio | sh -`
+   * `istioctl install --set profile=openshift`
+
+6. Create namespaces and enable auto-injection
+     * `kubectl create ns serverless-ns`
+     * `kubectl create ns serverfull-ns`
+     * `kubectl label namespace serverfull-ns serverless-ns istio-injection=enabled --overwrite`
+     * `kubectl get namespace -L istio-injection`
+
+7. Install hermes
    * `helm repo add hermes-charts https://jgomezselles.github.io/hermes-charts`
    * `helm repo update charts/kn-hermes`
    * Make sure to check/delete previous runs/namespaces: `kubectl get ns serverfull-ns serverless-ns`
    * Install serverfull instance on its own namespace:
-     * `helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml --create-namespace`
+     * `helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml`
    * Install serverless instance on its own namespace:
-     * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml --create-namespace --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
+     * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
 
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
 * `helm delete -n serverless-ns serverless`
-* `kubectl delete ns serverfull-ns serverless-ns`
+* `helm delete istiod -n istio-system`
+* `helm delete istio-base -n istio-system`
+* `kubectl delete ns istio-system serverfull-ns serverless-ns`
 * Delete grafana
 * `oc delete -f yamls/serving.yaml`
 * `oc delete -f yamls/serverless-operator.yaml`
@@ -87,3 +99,13 @@ crc config view
 * Export data https://docs.openshift.com/container-platform/4.15/monitoring/configuring-the-monitoring-stack.html#configuring_remote_write_storage_configuring-the-monitoring-stack 
 *  Serverless official [doc](https://docs.openshift.com/serverless/1.31/install/install-serverless-operator.html)
 *  Power monitoring docs [instructions](https://docs.openshift.com/container-platform/4.14/observability/power_monitoring/installing-power-monitoring.html)
+
+
+## Install istio with helm (failed for some issue with the apiserver probably):
+   * Following: https://istio.io/latest/docs/setup/install/helm/
+   * `helm repo add istio https://istio-release.storage.googleapis.com/charts`
+   * `kubectl create namespace istio-system`
+   * `helm install istio-base istio/base -n istio-system --set defaultRevision=default`
+   * Check `helm ls -n istio-system` is in STATUS `deployed`
+   * `helm install istiod istio/istiod -n istio-system --wait`
+   * Again, check `helm ls -n istio-system` is in STATUS `deployed`

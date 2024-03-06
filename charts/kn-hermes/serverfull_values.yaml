@@ -11,7 +11,7 @@ hermesjob:
 global:
   istio:
     sidecar:
-      inject: false
+      inject: true
   hermes:
     endpoint: "server-mock"
     port: "8080"

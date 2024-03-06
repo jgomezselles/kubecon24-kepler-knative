@@ -12,7 +12,7 @@ hermesjob:
 global:
   istio:
     sidecar:
-      inject: false
+      inject: true
   hermes:
     endpoint: "serverless-mock.hermes.svc.cluster.local"
     port: "80"
