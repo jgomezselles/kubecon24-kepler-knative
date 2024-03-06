@@ -41,6 +41,13 @@ crc config view
    * Install serverless instance on its own namespace:
      * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml --create-namespace --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
 
+## Deleting installation
+* `helm delete -n serverfull-ns serverfull`
+* `helm delete -n serverless-ns serverless`
+* `kubectl delete ns serverfull-ns serverless-ns`
+* Delete grafana
+* `oc delete -f yamls/serving.yaml`
+* `oc delete -f yamls/serverless-operator.yaml`
 
 # Other useful info
 
@@ -53,10 +60,6 @@ crc config view
 
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
-
-## Deleting installation
-* `oc delete -f yamls/serving.yaml`
-* `oc delete -f yamls/serverless-operator.yaml`
 
 ## Next
 * Find the best way to deploy the mock with a LoadBalancer in http/2
@@ -75,10 +78,6 @@ crc config view
   * Everything in the data path
   * Gateway and pods
   * Keep in mind that using local svc should be fine!
-
-## FIXME
-* Fix service monitor in the otel collector
-* Add endpoint to hermes to export OTLP metrics
 
 ## Useful docs
 * https://knative.dev/docs/serving/autoscaling/autoscale-go/ 
