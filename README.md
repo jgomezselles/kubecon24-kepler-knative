@@ -54,7 +54,7 @@ crc config view
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
 * `helm delete -n serverless-ns serverless`
-* `istioctl uninstall --purge`
+* `istioctl uninstall --purge` --> WARNING! This is cluster scoped!
 * `kubectl delete ns istio-system serverfull-ns serverless-ns`
 * Delete grafana
 * `oc delete -f yamls/serving.yaml`
