@@ -17,7 +17,7 @@ global:
     repo: ghcr.io/jgomezselles/kubecon24/loadgen
     tag: 0.0.2
     cm: traffic-script-cm
-    rate: 4000
+    rate: 2000
     print: 1
     time: 1200
 
