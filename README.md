@@ -35,7 +35,7 @@ crc config view
 4. Install istio with istioctl:
    * `curl -L https://istio.io/downloadIstio | sh -`
    * `kubectl create ns istio-system`
-   * `istioctl install --set profile=openshift --set values.global.proxy.holdApplicationUntilProxyStarts=true`
+   * `istioctl install --set profile=openshift --set meshConfig.defaultConfig.holdApplicationUntilProxyStarts=true`
 
 6. Create namespaces and enable auto-injection
      * `kubectl create ns serverless-ns`
@@ -45,12 +45,14 @@ crc config view
 
 7. Install hermes
    * `helm repo add hermes-charts https://jgomezselles.github.io/hermes-charts`
-   * `helm repo update charts/kn-hermes`
+   * `helm dep update charts/kn-hermes`
    * Make sure to check/delete previous runs/namespaces: `kubectl get ns serverfull-ns serverless-ns`
    * Install serverfull instance on its own namespace:
      * `helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml`
    * Install serverless instance on its own namespace:
-     * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml --set global.hermes.endpoint="serverless-mock.serverless-ns.svc.cluster.local"`
+     * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml`
+
+8. Load `dashboard.json` from this repo to the grafana instance and overwrite (Change UId manually)
 
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
