@@ -39,7 +39,6 @@ crc config view
 5. Install hermes
    * `helm repo add hermes-charts https://jgomezselles.github.io/hermes-charts`
    * `helm dep update charts/kn-hermes`
-   * Make sure to check/delete previous runs/namespaces: `kubectl get ns serverfull-ns serverless-ns`
    * Install serverfull instance on its own namespace:
      * `helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml`
    * Install serverless instance on its own namespace:
