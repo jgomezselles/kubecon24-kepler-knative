@@ -31,3 +31,24 @@ spec:
       port: 9103
       tolerations:
         - operator: Exists
+
+## Namespaces
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: serverless-ns
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: serverfull-ns
+  labels:
+    istio-injection: enabled

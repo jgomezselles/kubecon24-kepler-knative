@@ -24,7 +24,7 @@ crc config view
 ## Installing the demo
 1. Install serverless, power monitoring and opentelemetry operators by  `kubectl apply -f yamls/operators.yaml`
 
-2. Install user workload monitoring (prometheus), serving and kepler instances by:
+2. Install user workload monitoring (prometheus), serving, kepler instances and namespaces by:
    * `kubectl apply -f yamls/instances.yaml`
 
 > Check: `oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'`
@@ -34,16 +34,9 @@ crc config view
 
 4. Install istio with istioctl:
    * `curl -L https://istio.io/downloadIstio | sh -`
-   * `kubectl create ns istio-system`
    * `istioctl install --set profile=openshift --set meshConfig.defaultConfig.holdApplicationUntilProxyStarts=true`
 
-6. Create namespaces and enable auto-injection
-     * `kubectl create ns serverless-ns`
-     * `kubectl create ns serverfull-ns`
-     * `kubectl label namespace serverfull-ns istio-injection=enabled --overwrite`
-     * `kubectl get namespace -L istio-injection`
-
-7. Install hermes
+5. Install hermes
    * `helm repo add hermes-charts https://jgomezselles.github.io/hermes-charts`
    * `helm dep update charts/kn-hermes`
    * Make sure to check/delete previous runs/namespaces: `kubectl get ns serverfull-ns serverless-ns`
@@ -52,7 +45,7 @@ crc config view
    * Install serverless instance on its own namespace:
      * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml`
 
-8. Load `dashboard.json` from this repo to the grafana instance and overwrite (Change UId manually)
+6. Load `dashboard.json` from this repo to the grafana instance and overwrite (Change UId manually)
 
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
