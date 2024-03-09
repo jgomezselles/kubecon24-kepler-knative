@@ -22,8 +22,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1709900451932,
+  "id": 4,
+  "iteration": 1709940089361,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -79,7 +79,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 15,
         "x": 0,
         "y": 0
@@ -103,7 +103,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[10m]))",
+          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[1m]))",
           "legendFormat": "serverless",
           "range": true,
           "refId": "A"
@@ -114,7 +114,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[10m]))",
+          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[1m]))",
           "hide": false,
           "legendFormat": "serverfull",
           "range": true,
@@ -149,9 +149,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 15,
+        "h": 4,
+        "w": 3,
+        "x": 16,
         "y": 0
       },
       "id": 38,
@@ -206,7 +206,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 4,
         "w": 5,
         "x": 19,
         "y": 0
@@ -301,10 +301,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 9,
         "x": 15,
-        "y": 5
+        "y": 4
       },
       "id": 39,
       "options": {
@@ -406,10 +406,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 16,
         "x": 0,
-        "y": 13
+        "y": 9
       },
       "id": 47,
       "options": {
@@ -430,7 +430,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum by (container_namespace) (rate(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[10m]))",
+          "expr": "sum by (container_namespace) (rate(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[1m]))",
           "legendFormat": "{{ container_namespace }}",
           "range": true,
           "refId": "A"
@@ -441,7 +441,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[10m]))",
+          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[1m]))",
           "hide": false,
           "legendFormat": "Total serverless",
           "range": true,
@@ -478,10 +478,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 7,
         "x": 16,
-        "y": 13
+        "y": 9
       },
       "id": 36,
       "links": [
@@ -498,7 +498,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "sum"
+            "last"
           ],
           "fields": "",
           "values": false
@@ -512,79 +512,11 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[1h:15s])) * 0.000000277777777777778",
+          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[$__range:10s])) * 0.000000277777777777778",
           "refId": "A"
         }
       ],
-      "title": "SUM of Serverless Total Energy Consumption (kWh)",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "Namespaces: serverfull-ns|istio-system",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "kwatth"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 16,
-        "y": 20
-      },
-      "id": 42,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "Kepler metrics for Container Energy Consumption",
-          "url": "https://github.com/sustainable-computing-io/kepler-doc/blob/84e3e01a0110829937cd40f9634dd8d0c92540a4/docs/design/metrics.md#kepler-metrics-for-container-energy-consumption"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.5.5",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[1h:15s])) * 0.000000277777777777778",
-          "refId": "A"
-        }
-      ],
-      "title": "SUM of Serverfull+Istio Energy Consumption (kWh)",
+      "title": "Serverless Total Energy Consumption (kWh) $__range",
       "transparent": true,
       "type": "stat"
     },
@@ -640,10 +572,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 15,
+        "h": 7,
+        "w": 16,
         "x": 0,
-        "y": 21
+        "y": 15
       },
       "id": 48,
       "options": {
@@ -664,7 +596,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum by (container_namespace) (rate(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[10m]))",
+          "expr": "sum by (container_namespace) (rate(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[1m]))",
           "legendFormat": "{{ container_namespace }}",
           "range": true,
           "refId": "A"
@@ -675,7 +607,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[10m]))",
+          "expr": "sum(rate(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[1m]))",
           "hide": false,
           "legendFormat": "Total serverfull",
           "range": true,
@@ -685,6 +617,74 @@
       "title": "Serverfull real time Power consumption (W)",
       "transparent": true,
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Namespaces: serverfull-ns|istio-system",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 16,
+        "y": 15
+      },
+      "id": 42,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Kepler metrics for Container Energy Consumption",
+          "url": "https://github.com/sustainable-computing-io/kepler-doc/blob/84e3e01a0110829937cd40f9634dd8d0c92540a4/docs/design/metrics.md#kepler-metrics-for-container-energy-consumption"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[$__range:15s])) * 0.000000277777777777778",
+          "refId": "A"
+        }
+      ],
+      "title": "Serverfull+Istio Energy Consumption (kWh) $__range",
+      "transparent": true,
+      "type": "stat"
     },
     {
       "datasource": {
@@ -754,10 +754,10 @@
         ]
       },
       "gridPos": {
-        "h": 11,
+        "h": 8,
         "w": 14,
         "x": 0,
-        "y": 29
+        "y": 22
       },
       "id": 46,
       "options": {
@@ -778,7 +778,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[1h:15s])) * 0.000000277777777777778",
+          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[$__range:15s])) * 0.000000277777777777778",
           "legendFormat": "serverless",
           "range": true,
           "refId": "A"
@@ -789,16 +789,218 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[1h:15s])) * 0.000000277777777777778",
+          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverfull-ns|istio-system\"}[$__range:15s])) * 0.000000277777777777778",
           "hide": false,
           "legendFormat": "serverfull",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "Energy consumption (kWh) (per hour)",
+      "title": "Energy consumption (kWh) (per $__range)",
       "transparent": true,
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P1809F7CD0C75ACF3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Power (W)",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 62,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 4,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 22
+      },
+      "id": 50,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(kepler_container_core_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless|serverfull-ns|istio-system\"}[1m]))",
+          "legendFormat": "CORE",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(kepler_container_package_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless|serverfull-ns|istio-system\"}[1m]))",
+          "hide": false,
+          "legendFormat": "PKG",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(kepler_container_uncore_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless|serverfull-ns|istio-system\"}[1m]))",
+          "hide": false,
+          "legendFormat": "UNCORE",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(kepler_container_dram_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless|serverfull-ns|istio-system\"}[1m]))",
+          "hide": false,
+          "legendFormat": "DRAM",
+          "range": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(kepler_container_other_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless|serverfull-ns|istio-system\"}[1m]))",
+          "hide": false,
+          "legendFormat": "OTHER",
+          "range": true,
+          "refId": "E"
+        }
+      ],
+      "title": "Real time Power consumption (W)",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 30
+      },
+      "id": 49,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Kepler metrics for Container Energy Consumption",
+          "url": "https://github.com/sustainable-computing-io/kepler-doc/blob/84e3e01a0110829937cd40f9634dd8d0c92540a4/docs/design/metrics.md#kepler-metrics-for-container-energy-consumption"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "expr": "sum(increase(kepler_container_joules_total{container_namespace=~\"serverless-ns|knative-serving|knative-serving-ingress|openshift-serverless\"}[1h:15s])) * 0.000000277777777777778",
+          "refId": "A"
+        }
+      ],
+      "title": "SUM of Serverless Total Energy Consumption (kWh)",
+      "transparent": true,
+      "type": "stat"
     },
     {
       "datasource": {
@@ -826,10 +1028,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 6,
         "w": 9,
         "x": 14,
-        "y": 29
+        "y": 30
       },
       "id": 18,
       "links": [
@@ -916,7 +1118,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "prometheus",
           "value": "prometheus"
         },
@@ -944,13 +1146,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Kepler Exporter Dashboard",
-  "uid": "381ef848417532a1ef945494449453a41fdabaa7",
-  "version": 18,
+  "uid": "381ef848417532a1ef945494449453a41fdabaa4",
+  "version": 9,
   "weekStart": ""
 }
