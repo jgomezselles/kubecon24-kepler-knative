@@ -52,3 +52,9 @@ metadata:
   name: serverfull-ns
   labels:
     istio-injection: enabled
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: plain-ns

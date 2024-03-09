@@ -43,17 +43,19 @@ crc config view
      * `helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml`
    * Install serverless instance on its own namespace:
      * `helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml`
+   * Install plain instance (no serverless, no istio):
+     * `helm install plain -n plain-ns charts/kn-hermes/ -f charts/kn-hermes/plain_values.yaml`
 
 6. Load `dashboard.json` from this repo to the grafana instance and overwrite (Change UId manually)
 
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
 * `helm delete -n serverless-ns serverless`
+* `helm delete -n plain-ns plain`
 * `istioctl uninstall --purge` --> WARNING! This is cluster scoped!
-* `kubectl delete ns istio-system serverfull-ns serverless-ns`
 * Delete grafana
-* `oc delete -f yamls/serving.yaml`
-* `oc delete -f yamls/serverless-operator.yaml`
+* `oc delete -f yamls/instances.yaml`
+* `oc delete -f yamls/operators.yaml`
 
 # Other useful info
 

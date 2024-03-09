@@ -46,11 +46,16 @@ hermesjob:
   serverless:
     enabled: false
   server:
-    enabled: true
+    enabled: false
+  plain:
+    enabled: false
 
 ## Customizations for each dependency
 hermesjob-server:
   schedule: "1 * * * *"
 
 hermesjob-serverless:
-  schedule: "31 * * * *"
+  schedule: "21 * * * *"
+
+hermesjob-plain:
+  schedule: "41 * * * *"

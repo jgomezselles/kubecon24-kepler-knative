@@ -2,8 +2,6 @@
 
 ## Conditions for Chart dependencies
 hermesjob:
-  serverless:
-    enabled: false
   server:
     enabled: true
 

@@ -16,3 +16,9 @@ dependencies:
     repository: https://jgomezselles.github.io/hermes-charts
     alias: hermesjob-server
     condition: hermesjob.server.enabled
+
+  - name: hermes-job
+    version: 0.0.3
+    repository: https://jgomezselles.github.io/hermes-charts
+    alias: hermesjob-plain
+    condition: hermesjob.plain.enabled

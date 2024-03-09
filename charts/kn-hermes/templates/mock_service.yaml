@@ -1,4 +1,4 @@
-{{- if .Values.hermesjob.server.enabled -}}
+{{- if or (.Values.hermesjob.server.enabled) (.Values.hermesjob.plain.enabled) -}}
 apiVersion: v1
 kind: Service
 metadata:
