@@ -1,21 +1,6 @@
 # kubecon24-kepler-knative
 Repo with assets to reproduce the talk
 
-## Configuring OpenShift local
-* crc setup
-* crc config set enable-cluster-monitoring true
-
-```
-crc config view
-- consent-telemetry                     : no
-- cpus                                  : 7
-- enable-cluster-monitoring             : true
-- memory                                : 19000
-
-```
-
-* crc start --cpus 7
-
 ## Install `kn` cli
    *  `wget https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest/kn-linux-amd64.tar.gz -O my-kn.tar.gz`
    *  `tar -xf my-kn.tar.gz`
@@ -48,6 +33,13 @@ crc config view
 
 6. Load `dashboard.json` from this repo to the grafana instance and overwrite (Change UId manually)
 
+
+## Example number 5 can be run with
+
+```
+helm install serverless -n  serverless-ns charts/kn-hermes/ -f charts/kn-hermes/serverless_values.yaml --set mock.image="quay.io/kevindubois/quarked:jvm" --set global.hermes.rate=6 --set global.hermes.cm=get-cm; helm install plain -n plain-ns charts/kn-hermes/ -f charts/kn-hermes/plain_values.yaml  --set mock.image="quay.io/kevindubois/quarked:jvm" --set global.hermes.rate=6 --set global.hermes.cm=get-cm; helm install serverfull -n  serverfull-ns charts/kn-hermes/ -f charts/kn-hermes/serverfull_values.yaml --set mock.image="quay.io/kevindubois/quarked:jvm" --set global.hermes.rate=6 --set global.hermes.cm=get-cm
+```
+
 ## Deleting installation
 * `helm delete -n serverfull-ns serverfull`
 * `helm delete -n serverless-ns serverless`
@@ -69,23 +61,12 @@ crc config view
 ## Building mock image
    * `docker build -f server-mock/docker/Dockerfile . -t ghcr.io/jgomezselles/kubecon24/server-mock:0.0.1 --progress plain --no-cache`
 
-## Next
-* Find the best way to deploy the mock with a LoadBalancer in http/2
-* Create dashboard
-* See if we can save prometheus metrics to just reuse them
-* Change commands to be kubectl
-* Change Kepler to community version
-* Record the demo
-
 ## To monitor
 * Serverless:
   * openshift-serverless
   * knative-serving
   * knative-serving-ingress
   * operator
-  * Everything in the data path
-  * Gateway and pods
-  * Keep in mind that using local svc should be fine!
 
 ## Useful docs
 * https://knative.dev/docs/serving/autoscaling/autoscale-go/ 
@@ -96,12 +77,15 @@ crc config view
 *  Serverless official [doc](https://docs.openshift.com/serverless/1.31/install/install-serverless-operator.html)
 *  Power monitoring docs [instructions](https://docs.openshift.com/container-platform/4.14/observability/power_monitoring/installing-power-monitoring.html)
 
+## Configuring OpenShift local
+* crc setup
+* crc config set enable-cluster-monitoring true
 
-## Install istio with helm (failed for some issue with the apiserver probably):
-   * Following: https://istio.io/latest/docs/setup/install/helm/
-   * `helm repo add istio https://istio-release.storage.googleapis.com/charts`
-   * `kubectl create namespace istio-system`
-   * `helm install istio-base istio/base -n istio-system --set defaultRevision=default`
-   * Check `helm ls -n istio-system` is in STATUS `deployed`
-   * `helm install istiod istio/istiod -n istio-system --wait`
-   * Again, check `helm ls -n istio-system` is in STATUS `deployed`
+```
+crc config view
+- consent-telemetry                     : no
+- cpus                                  : 7
+- enable-cluster-monitoring             : true
+- memory                                : 19000
+
+```
